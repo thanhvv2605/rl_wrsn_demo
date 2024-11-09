@@ -18,7 +18,7 @@ def log(net, mcs):
 
 network = WRSN(scenario_path="physical_env/network/network_scenarios/hanoi1000n50.yaml"
                ,agent_type_path="physical_env/mc/mc_types/default.yaml"
-               ,num_agent=3)
+               ,num_agent=1)
 controller = RandomController()
 
 request = network.reset()
@@ -29,6 +29,9 @@ for id, _ in enumerate(network.net.targets_active):
 while not request["terminal"]:
     print(request["agent_id"], request["action"], request["terminal"])
     action = controller.make_action(request["agent_id"], request["state"], request["info"], network)
+    print("embedding of all node in network: ", network.get_state(0))
+    print("embedding of all node in network: ", network.get_enegy())
+
     request = network.step(request["agent_id"], action)
     
 print(network.net.env.now)
